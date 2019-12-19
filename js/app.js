@@ -6,11 +6,7 @@ console.log('Tamagotchi Game');
 		//e.i. this.hunger <= 7 $p.text("starving")
 		//hunger will increase sleepiness and reduce boredom
 
-// Needs:
-	// HTML Form for user input(listener w/ func. call) to create pet, this is 
-	//how Class is instantiated. Form input will also start the game: SEE BELOW.
-
-// rules:
+// rules reminder:
 	// No -- global scope, COMMITS! FREQUENTLY, 
 
 // Class
@@ -20,58 +16,63 @@ class Tamagotchi {
 		this.sleepiness = 0 // increment?
 		this.boredom = 0 // what will happen per specific value
 		this.age = 0// what does 0 mean?
-		this.name = 0//${UserInput}
+		this.name = name // Based on user input
 	}
 
 }
 
-
-
-
-
-
-
-
 // Game; variables/ stored data, functions,
-
 const game = {
 	hour: 0,
 	gameStart() {
-		$('#start-game').text("signed your soul for a devil").hide(3000)
-		$('<h1 class="pet"></h1>').text(`${$('#class-name')}`).appendTo($('#start-game'))
+		this.gameTimer()
+			const input = $('#class-name').val()
+		console.log(input);
+
+		const $h1 = $('<h1 class="pet"></h1>')
+		$h1.text(`${$('#class-name').val()}`).appendTo(document.body)
+		$h1.css({
+		textAlign: 'center',
+		color: 'darkred'
+		})
+		const tommy = new Tamagotchi(0, 0, 0, 0, `${$('#class-name').val()}`)
+		console.log(tommy);
+		$('#start-game').text("signed your soul for a Devil").hide(4000)
 
 	},
 	gameTimer() {
 		const hour = setInterval(() => {
 			this.hour++
-		}, 1000)
-	}
+			
+			console.log(this.hour);
+		}, 1000) //reduce 1 digit to start timer
+	},
 
 	//function ->class object --> created when player inputs name
 	//function ->timer for overall game
 		//if/else for variables when timer values reach certain point
 
-}
-//call game start ()? --> game start/ call will be in event listener for form 'submit'
-
-
-
-
-
-
-
+}//--> gameStart/ call will be in event listener in form 'submit'
 
 // Event Listeners
 //	Game start upon form submission
 $('#start-game').on('submit', (e) => {
+	// prevents reload upon submitting input
 	e.preventDefault()
+
 	$(e.target)
 	console.log($(e.target));
+
+
+
+	//start game
 	game.gameStart()
 })
 
 
-
+//NEEDS & RULES:
+	// HTML Form for user input(listener w/ func. call) to create pet, this is 
+	//how Class is instantiated. Form input will also start the game:
 
 // *	The game should display a character of your choice (and its name) on the screen to represent 
 // your pet. While the pet is alive, it must move somehow. You can use CSS or jQuery animation, 

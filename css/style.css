@@ -5,3 +5,13 @@ body {
 #start-game {
 	text-align: center;
 }
+
+#class-name {
+	width: 140px;
+}
+
+#sign-name {
+	width: 70px;
+	border: 1px solid black;
+	padding: 1.5px 0px;
+}
