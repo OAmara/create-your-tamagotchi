@@ -1,3 +1,7 @@
 body {
 	background-color: lightcoral;
 }
+
+#start-game {
+	text-align: center;
+}
