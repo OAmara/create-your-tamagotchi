@@ -13,9 +13,9 @@ console.log('Tamagotchi Game');
 class Tamagotchi {
 	constructor(hunger, sleepiness, boredom, age, name) {
 		this.hunger = game.hunger
-		this.sleepiness = game.sleepiness // increment?
+		this.sleepiness = game.sleepiness
 		this.boredom = game.boredom // what will happen per specific value
-		this.age = game.age// what does 0 mean?
+		this.age = game.age
 		this.name = name // Based on user input
 	}
 	eat() {
@@ -27,7 +27,7 @@ class Tamagotchi {
 
 // Game; variables/ stored data, functions,
 const game = {
-	// Yes Reuben, I have to place these varaibles to change inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
+	// Yes Reuben, I have to store these varaibles inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
 	hours: 0,
 	hunger: 0,
 	sleepiness: 0,
@@ -45,22 +45,23 @@ const game = {
 		textAlign: 'center',
 		color: 'darkred'
 		})
+
 		const $img = $('<img class="fire" src="https://i.imgur.com/x7FCCDz.png">')
 		$img.css({
 			display: 'block',
 			BackgroundColor: 'red',
 			height: '300px',
 			margin: 'auto'
-
 		})
 		$img.insertAfter($h1)
+
 		const tommy = new Tamagotchi($(this.hunger), $(this.sleepiness), $(this.boredom), $(this.age), $input)
 		game.tamagotchi = tommy
 		console.log(tommy);
-		$('#start-game').text(". . . signed your soul for a Devil").hide(5000)
-		$('#intro').hide(1100)
-		this.gameTimer()
 
+		$('#start-game').text(". . . signed your soul for a Devil").hide(5000)
+		$('#intro').hide(1000)
+		this.gameTimer()
 	},
 	gameTimer() {
 		this.intervalId = setInterval(() => {
@@ -72,7 +73,7 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1300) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1400) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
@@ -89,6 +90,8 @@ const game = {
 		}
 	},
 	calmPet() {
+		// URGENT -- create light effect when pressed. Last specific interval or length
+			//REQUIREMENT
 		if(this.sleepiness >= 1 && this.hunger >= 1 && this.boredom >= 1) {
 			this.sleepiness -= 1
 			this.hunger -= 1
@@ -99,7 +102,7 @@ const game = {
 	entertainPet() {
 		if(this.boredom >= 1) {
 			this.boredom -= 1
-			this.sleepiness += 1
+			// this.sleepiness += 1
 			this.hunger += 1
 			this.printStats()
 		}
@@ -110,8 +113,7 @@ const game = {
 		}
 		if (this.age > 6 && this.age < 13) {
 			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
-		} 
-		this.gameOver()
+		}
 	},
 	gameOver() {
 		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
@@ -121,13 +123,16 @@ const game = {
 			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
 			$h1.prependTo(document.body)
 			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png")
+			const $h2 = $('<h2/>')
+			$h2.text(`Your pet made it to age: ${this.age}, before being banished to it's biological Father down south.`)
+			$h2.css({
+				textAlign: 'center',
+				fontSize: '1.5em'
+			})
+			$h2.prependTo($('.hunger'))
 		}
 	}
 
-
-	//function ->class object --> created when player inputs name
-	//function ->timer for overall game
-		//if/else for variables when timer values reach certain point
 
 }//--> gameStart/ call will be in event listener in form 'submit'
 
@@ -138,9 +143,7 @@ $('#start-game').on('submit', (e) => {
 	e.preventDefault()
 
 	$(e.target)
-	console.log($(e.target));
-
-
+	// console.log($(e.target));
 
 	//start game
 	game.gameStart()
@@ -151,12 +154,10 @@ $('.feed').on('click', (e) => {
 })
 
 $('.sleep').on('click', (e) => {
-	console.log($(e.target));
 	game.calmPet()
 })
 
 $('.play').on('click', (e) => {
-	console.log($(e.target));
 	game.entertainPet()
 })
 
