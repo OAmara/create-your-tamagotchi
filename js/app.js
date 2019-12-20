@@ -72,7 +72,7 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1600) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)

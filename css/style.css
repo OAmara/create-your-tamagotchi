@@ -5,7 +5,7 @@ body {
 
 #intro {
 	text-align: center;
-	font-size: 1.6em;
+	font-size: 1.7em;
 }
 
 #start-game {
@@ -26,11 +26,11 @@ body {
 	color: red;
 }
 
-.feed {
+.thumb {
 	background-color: lightcoral;
 }
 
-.wood {
+.thmb-nail {
 	display: block;
 	height: 30px;
 	background-color: lightcoral;
