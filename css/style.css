@@ -26,7 +26,15 @@ body {
 	color: red;
 }
 
-.thumb {
+.feed {
+	background-color: lightcoral;
+}
+
+.play {
+	background-color: lightcoral;
+}
+
+.sleep {
 	background-color: lightcoral;
 }
 

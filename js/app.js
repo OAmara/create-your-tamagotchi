@@ -72,7 +72,7 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1600) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1300) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
@@ -105,10 +105,10 @@ const game = {
 		}
 	},
 	evolve() {
-		if(this.age > 3 && this.age < 8) {
+		if(this.age > 3 && this.age < 7) {
 			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
 		}
-		if (this.age > 8 && this.age < 14) {
+		if (this.age > 6 && this.age < 13) {
 			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
 		} 
 		this.gameOver()
