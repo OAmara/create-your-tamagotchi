@@ -71,20 +71,34 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1000) //reduce 1 digit to start timer, return to 1000
+		}, 1000) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
-		$('.sleepiness').text(this.sleepiness)
-		$('.boring').text(this.boredom)
+		$('.sleepiness').text(`tired ${this.sleepiness}`)
+		$('.boring').text(`Dullness ${this.boredom}`)
 		this.gameOver()
 	},
 	feedPet() {
 		if(this.hunger >= 1) {
 			this.hunger -= 1
+			this.sleepiness += 1
 			this.printStats()
 		}
 	},
+	calmPet() {
+		if(this.sleepiness >= 1) {
+			this.sleepiness -= 1
+			this.printStats()
+		}
+	},
+	entertainPet() {
+		if(this.boredom >= 1) {
+			this.boredom -= 1
+			this.sleepiness += 1
+			this.hunger += 1
+		}
+	}
 	gameOver() {
 		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
 			clearInterval(this.intervalId)
