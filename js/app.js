@@ -162,7 +162,7 @@ const game = {
 			// Instead of Tag, use change image
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
 			$('.div').css('filter', 'blur(2px)')
-			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
+			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > play</h3></h1>')
 			$h1.prependTo(document.body)
 			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png").css('filter', 'blur(2px)')
 			// displays age when gameover
