@@ -12,33 +12,37 @@ console.log('Tamagotchi Game');
 // Class
 class Tamagotchi {
 	constructor(hunger, sleepiness, boredom, age, name) {
-		this.hunger = hunger
-		this.sleepiness = sleepiness // increment?
-		this.boredom = boredom // what will happen per specific value
-		this.age = age// what does 0 mean?
+		this.hunger = game.hunger
+		this.sleepiness = game.sleepiness // increment?
+		this.boredom = game.boredom // what will happen per specific value
+		this.age = game.age// what does 0 mean?
 		this.name = name // Based on user input
 	}
+
+
 	// create methods associated to each button?
 }
 
 // Game; variables/ stored data, functions,
 const game = {
+	// Yes Reuben, I have to place these varaibles to change inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
 	hours: 0,
-	tamagotchi: null,
-
-	// hunger: 0,
-	// sleepiness: 0,
+	hunger: 0,
+	sleepiness: 0,
+	boredom: 0,
+	age: 0,
+	// tamagotchi: null,
 	gameStart() {
-			const input = $('#class-name').val()
-		console.log(input);
+		const $input = $('#class-name').val()
+		console.log($input);
 
 		const $h1 = $('<h1 class="pet"></h1>')
-		$h1.text(`${$('#class-name').val()}`).appendTo(document.body)
+		$h1.text(`${$('#class-name').val()}`).prependTo(document.body)
 		$h1.css({
 		textAlign: 'center',
 		color: 'darkred'
 		})
-		const tommy = new Tamagotchi(0, 0, 0, 0, `${$('#class-name').val()}`)
+		const tommy = new Tamagotchi($(this.hunger), $(this.sleepiness), $(this.boredom), $(this.age), $input)
 		game.tamagotchi = tommy
 		console.log(tommy);
 		$('#start-game').text("signed your soul for a Devil").hide(4000)
@@ -47,14 +51,14 @@ const game = {
 	},
 	gameTimer() {
 		const intervalId = setInterval(() => {
-			this.tamagotchi.hours +=1
-			this.tamagotchi.hunger += 2
+			this.hours++
+			this.hunger += 2
 			this.sleepiness++
 			this.boredom += 2
 			this.age++
 			console.log(game.hunger);
 			console.log(game.sleepiness);
-		}, 2500) //reduce 1 digit to start timer
+		}, 3500) //reduce 1 digit to start timer
 	}
 
 	//function ->class object --> created when player inputs name
