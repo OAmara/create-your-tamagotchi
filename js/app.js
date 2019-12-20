@@ -40,7 +40,7 @@ const game = {
 		console.log($input);
 
 		const $h1 = $('<h1 class="pet"></h1>')
-		$h1.text(`${$('#class-name').val()}`).prependTo(document.body)
+		$h1.text($input).prependTo(document.body)
 		$h1.css({
 		textAlign: 'center',
 		color: 'darkred'
@@ -57,7 +57,8 @@ const game = {
 		const tommy = new Tamagotchi($(this.hunger), $(this.sleepiness), $(this.boredom), $(this.age), $input)
 		game.tamagotchi = tommy
 		console.log(tommy);
-		$('#start-game').text("signed your soul for a Devil").hide(5000)
+		$('#start-game').text(". . . signed your soul for a Devil").hide(5000)
+		$('#intro').hide(1100)
 		this.gameTimer()
 
 	},
@@ -71,13 +72,14 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1000) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
 		$('.sleepiness').text(`tired ${this.sleepiness}`)
 		$('.boring').text(`Dullness ${this.boredom}`)
 		this.gameOver()
+		this.evolve()
 	},
 	feedPet() {
 		if(this.hunger >= 1) {
@@ -102,12 +104,19 @@ const game = {
 			this.printStats()
 		}
 	},
+	evolve() {
+		if(this.age > 3 || this.age < 6) {
+
+		} else if (this.age > 6 || this.age < 10) {
+
+		} 
+	},
 	gameOver() {
 		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
 			clearInterval(this.intervalId)
 			// Instead of Tag, use change image
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
-			const $h1 = $('<h1 class="game-over">Game Over<h3>hint: calm > feed > entertain</h3></h1>')
+			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
 			$h1.prependTo(document.body)
 		}
 	}

@@ -1,23 +1,33 @@
 body {
-	background-color: lightcoral;
+	background-color: coral;
+	font-family: 'Jim Nightshade', cursive;
+}
+
+#intro {
+	text-align: center;
+	font-size: 1.6em;
 }
 
 #start-game {
 	text-align: center;
+	font-size: 1.5em;
 }
 
 #class-name {
-	width: 140px;
+	width: 145px;
+	color:;
+	font-weight: 600;
 }
 
 #sign-name {
 	width: 70px;
-	border: 1px solid black;
+	border: 1px dotted black;
 	padding: 1.5px 0px;
+	color: red;
 }
 
 .feed {
-background-color: lightcoral;
+	background-color: lightcoral;
 }
 
 .wood {
@@ -34,5 +44,17 @@ background-color: lightcoral;
 }
 
 .game-over {
-	font-size: 2em;
+	font-size: 3.5em;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+.hint {
+	font-size: 1em;
+	text-align: center;
+	margin-top: 0;
+}
+
+h1 {
+	text-transform: capitalize;
 }
