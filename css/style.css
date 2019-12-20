@@ -37,7 +37,7 @@ body {
 }
 
 /*can change outside of JS although made in JS w/ jQuery*/
-.bag { 
+.fire { 
 	display: block;
 	height: 400px;
 	background-color:;

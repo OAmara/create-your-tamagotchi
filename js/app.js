@@ -45,7 +45,7 @@ const game = {
 		textAlign: 'center',
 		color: 'darkred'
 		})
-		const $img = $('<img class="bag" src="https://i.imgur.com/h9JL9Kt.png">')
+		const $img = $('<img class="fire" src="https://i.imgur.com/x7FCCDz.png">')
 		$img.css({
 			display: 'block',
 			BackgroundColor: 'red',
@@ -105,11 +105,13 @@ const game = {
 		}
 	},
 	evolve() {
-		if(this.age > 3 || this.age < 6) {
-
-		} else if (this.age > 6 || this.age < 10) {
-
+		if(this.age > 3 && this.age < 8) {
+			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
+		}
+		if (this.age > 8 && this.age < 14) {
+			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
 		} 
+		this.gameOver()
 	},
 	gameOver() {
 		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
@@ -118,6 +120,7 @@ const game = {
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
 			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
 			$h1.prependTo(document.body)
+			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png")
 		}
 	}
 
