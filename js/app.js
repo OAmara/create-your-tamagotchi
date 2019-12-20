@@ -2,9 +2,8 @@ console.log('Tamagotchi Game');
 
 // GOALS:
 	//Make a hover over attributes that will show details of each class property
-	//display specific string when value in class property reaches specific range.
+	//display specific string when value reaches specific range.
 		//e.i. this.hunger <= 7 $p.text("starving")
-		//hunger will increase sleepiness and reduce boredom
 
 // rules reminder:
 	// No -- global scope, COMMITS! FREQUENTLY, 
@@ -18,6 +17,7 @@ class Tamagotchi {
 		this.age = game.age
 		this.name = name // Based on user input
 	}
+	// not currently used
 	eat() {
 		this.hunger - 4
 	}
@@ -42,8 +42,8 @@ const game = {
 		const $h1 = $('<h1 class="pet"></h1>')
 		$h1.text($input).prependTo(document.body)
 		$h1.css({
-		textAlign: 'center',
-		color: 'darkred'
+			textAlign: 'center',
+			color: 'darkred'
 		})
 
 		const $img = $('<img class="fire" src="https://i.imgur.com/x7FCCDz.png">')
@@ -83,7 +83,7 @@ const game = {
 		this.evolve()
 	},
 	feedPet() {
-		if(this.hunger >= 1) {
+		if (this.hunger >= 1) {
 			this.hunger -= 1
 			// this.sleepiness += 1// too hard
 			this.printStats()
@@ -97,15 +97,15 @@ const game = {
 				this.hunger = 1
 				//function for lights
 					//try using setTimeout()
-					this.printStats()
-					$(document.body).css({
-						backgroundImage: 'url("https://i.imgur.com/e18s260.png")',
-						backgroundRepeat: 'no-repeat',
-						backgroundPosition: 'center',
-						filter: 'blur(1px)',
-						backgroundColor: 'rgba(190, 81, 42, 1)'
-					})	
-					this.boredom -= 1
+				this.printStats()
+				$(document.body).css({
+					backgroundImage: 'url("https://i.imgur.com/e18s260.png")',
+					backgroundRepeat: 'no-repeat',
+					backgroundPosition: 'center',
+					filter: 'blur(1px)',
+					backgroundColor: 'rgba(190, 81, 42, 1)'
+				})	
+				this.boredom -= 1
 
 				setTimeout(() => {
 					$(document.body).css({
@@ -115,13 +115,11 @@ const game = {
 						filter: 'blur(0px)',
 						backgroundColor: 'coral'
 					})
-						this.calmPet()
+					this.calmPet()
 				},2500)
 				// if(this.hours === true){//this.hours % 3 === 0 //&& this.hours % 3 === 0 )
 				// }
 			}
-
-
 	
 	},
 	calmPet() {
