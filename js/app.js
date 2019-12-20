@@ -33,7 +33,8 @@ const game = {
 	sleepiness: 0,
 	boredom: 0,
 	age: 0,
-	// tamagotchi: null,
+	tamagotchi: null,
+	intervalId: 0,
 	gameStart() {
 		const $input = $('#class-name').val()
 		console.log($input);
@@ -61,7 +62,7 @@ const game = {
 
 	},
 	gameTimer() {
-		const intervalId = setInterval(() => {
+		this.intervalId = setInterval(() => {
 			this.hours += 1
 			this.hunger += 2
 			this.sleepiness += 1
@@ -70,15 +71,27 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 2000) //reduce 1 digit to start timer, return to 1000
+		}, 1000) //reduce 1 digit to start timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
 		$('.sleepiness').text(this.sleepiness)
 		$('.boring').text(this.boredom)
+		this.gameOver()
 	},
 	feedPet() {
-		
+		if(this.hunger >= 1) {
+			this.hunger -= 1
+			this.printStats()
+		}
+	},
+	gameOver() {
+		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
+			clearInterval(this.intervalId)
+			// Instead of Tag, use change image
+			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
+			$('<h1>Game Over</h1>').prependTo(document.body)
+		}
 	}
 
 
@@ -101,6 +114,11 @@ $('#start-game').on('submit', (e) => {
 
 	//start game
 	game.gameStart()
+})
+
+$('.feed').on('click', (e) => {
+	console.log($(e.target));
+	game.feedPet()
 })
 
 
