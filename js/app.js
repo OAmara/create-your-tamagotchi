@@ -28,7 +28,7 @@ class Tamagotchi {
 // Game; variables/ stored data, functions,
 const game = {
 	// Yes Reuben, I have to store these varaibles inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
-	hours: 0,
+	hours: true,
 	hunger: 0,
 	sleepiness: 0,
 	boredom: 0,
@@ -59,8 +59,8 @@ const game = {
 		game.tamagotchi = tommy
 		console.log(tommy);
 
-		$('#start-game').text(". . . signed your soul for a Devil").hide(5000)
-		$('#intro').hide(1000)
+		$('#start-game').text(". . . signed your soul for a Devil").hide(5100)
+		$('#intro').hide(900)
 		this.gameTimer()
 	},
 	gameTimer() {
@@ -76,18 +76,52 @@ const game = {
 		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
-		$('.hunger').text(`hunger ${this.hunger}`)
-		$('.sleepiness').text(`tired ${this.sleepiness}`)
-		$('.boring').text(`Dullness ${this.boredom}`)
-		this.gameOver()
+		$('.hunger').text(`hunger: ${this.hunger}`)
+		$('.sleepiness').text(`tired: ${this.sleepiness}`)
+		$('.boring').text(`Dullness: ${this.boredom}`)
+		// this.gameOver() // calling this here 
 		this.evolve()
 	},
 	feedPet() {
 		if(this.hunger >= 1) {
 			this.hunger -= 1
-			this.sleepiness += 1
+			// this.sleepiness += 1// too hard
 			this.printStats()
 		}
+	},
+	lightsOut() {
+			if(this.sleepiness >= 4){
+				this.sleepiness -= 3
+				this.boredom -= 2
+				this.hunger -= 2
+				//function for lights
+					//try using setTimeout()
+					this.printStats()
+					$(document.body).css({
+						backgroundImage: 'url("https://i.imgur.com/e18s260.png")',
+						backgroundRepeat: 'no-repeat',
+						backgroundPosition: 'center',
+						filter: 'blur(1px)',
+						backgroundColor: 'rgba(190, 81, 42, 1)'
+					})	
+					this.boredom -= 1
+
+				setTimeout(() => {
+					$(document.body).css({
+						backgroundImage: 'none',
+						backgroundRepeat: 'no-repeat',
+						backgroundPosition: 'center',
+						filter: 'blur(0px)',
+						backgroundColor: 'coral'
+					})
+						this.calmPet()
+				},2500)
+				// if(this.hours === true){//this.hours % 3 === 0 //&& this.hours % 3 === 0 )
+				// }
+			}
+
+
+	
 	},
 	calmPet() {
 		// URGENT -- create light effect when pressed. Last specific interval or length
@@ -103,19 +137,22 @@ const game = {
 		if(this.boredom >= 1) {
 			this.boredom -= 1
 			// this.sleepiness += 1
-			this.sleepiness += 1
+			// this.sleepiness += 1//too hard
 			this.printStats()
 		}
 	},
 	evolve() {
-		if(this.age > 3 && this.age < 6) {
+		if (this.age > 3 && this.age < 6) {
 			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
+			this.gameOver()
 		}
-		if (this.age > 5 && this.age < 10) {
+		if (this.age > 5 && this.age < 8) {
 			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
+			this.gameOver()
 		}
-		if (this.age > 9 && this.age < 100) {
+		if (this.age > 7 && this.age < 100) {
 			$('.fire').attr("src", "https://i.imgur.com/neWrJMI.gif")
+			this.gameOver()
 		}
 	},
 	gameOver() {
@@ -123,16 +160,18 @@ const game = {
 			clearInterval(this.intervalId)
 			// Instead of Tag, use change image
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
+			$('.div').css('filter', 'blur(2px)')
 			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
 			$h1.prependTo(document.body)
-			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png")
+			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png").css('filter', 'blur(2px)')
 			const $h2 = $('<h2/>')
 			$h2.text(`Your pet made it to age: ${this.age}, before being banished to it's biological Father down south.`)
 			$h2.css({
 				textAlign: 'center',
-				fontSize: '1.6em'
+				fontSize: '1.6em',
+				filter: 'blur(0px)'
 			})
-			$h2.prependTo($('.hunger'))
+			$h2.insertBefore($('.div'))
 		}
 	}
 
@@ -157,7 +196,8 @@ $('.feed').on('click', (e) => {
 })
 
 $('.sleep').on('click', (e) => {
-	game.calmPet()
+	game.lightsOut()
+	// game.calmPet()
 })
 
 $('.play').on('click', (e) => {
@@ -198,7 +238,5 @@ $('.play').on('click', (e) => {
 // go back to working the way it did before you turned them off.
 
 // *	You must morph your pet at certain ages.
-
-
 
 
