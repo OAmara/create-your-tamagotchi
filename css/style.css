@@ -25,3 +25,10 @@ background-color: lightcoral;
 	height: 30px;
 	background-color: lightcoral;
 }
+
+/*can change outside of JS although made in JS w/ jQuery*/
+.bag { 
+	display: block;
+	height: 400px;
+	background-color:;
+}

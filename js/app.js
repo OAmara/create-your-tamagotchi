@@ -44,7 +44,7 @@ const game = {
 		textAlign: 'center',
 		color: 'darkred'
 		})
-		const $img = $('<img src="https://i.imgur.com/h9JL9Kt.png">')
+		const $img = $('<img class="bag" src="https://i.imgur.com/h9JL9Kt.png">')
 		$img.css({
 			display: 'block',
 			BackgroundColor: 'red',
@@ -62,15 +62,24 @@ const game = {
 	},
 	gameTimer() {
 		const intervalId = setInterval(() => {
-			this.hours++
+			this.hours += 1
 			this.hunger += 2
-			this.sleepiness++
+			this.sleepiness += 1
 			this.boredom += 2
-			this.age++
+			this.age += 1
 			console.log(game.hunger);
-			console.log(game.sleepiness);
-		}, 3500) //reduce 1 digit to start timer
+
+			this.printStats()
+		}, 2000) //reduce 1 digit to start timer, return to 1000
 	},
+	printStats() {
+		$('.hunger').text(`hunger ${this.hunger}`)
+		$('.sleepiness').text(this.sleepiness)
+		$('.boring').text(this.boredom)
+	},
+	feedPet() {
+		
+	}
 
 
 	//function ->class object --> created when player inputs name
