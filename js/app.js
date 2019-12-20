@@ -12,20 +12,23 @@ console.log('Tamagotchi Game');
 // Class
 class Tamagotchi {
 	constructor(hunger, sleepiness, boredom, age, name) {
-		this.hunger = 0
-		this.sleepiness = 0 // increment?
-		this.boredom = 0 // what will happen per specific value
-		this.age = 0// what does 0 mean?
+		this.hunger = hunger
+		this.sleepiness = sleepiness // increment?
+		this.boredom = boredom // what will happen per specific value
+		this.age = age// what does 0 mean?
 		this.name = name // Based on user input
 	}
-
+	// create methods associated to each button?
 }
 
 // Game; variables/ stored data, functions,
 const game = {
-	hour: 0,
+	hours: 0,
+	tamagotchi: null,
+
+	// hunger: 0,
+	// sleepiness: 0,
 	gameStart() {
-		this.gameTimer()
 			const input = $('#class-name').val()
 		console.log(input);
 
@@ -36,17 +39,23 @@ const game = {
 		color: 'darkred'
 		})
 		const tommy = new Tamagotchi(0, 0, 0, 0, `${$('#class-name').val()}`)
+		game.tamagotchi = tommy
 		console.log(tommy);
 		$('#start-game').text("signed your soul for a Devil").hide(4000)
+		this.gameTimer()
 
 	},
 	gameTimer() {
-		const hour = setInterval(() => {
-			this.hour++
-			
-			console.log(this.hour);
-		}, 1000) //reduce 1 digit to start timer
-	},
+		const intervalId = setInterval(() => {
+			this.tamagotchi.hours +=1
+			this.tamagotchi.hunger += 2
+			this.sleepiness++
+			this.boredom += 2
+			this.age++
+			console.log(game.hunger);
+			console.log(game.sleepiness);
+		}, 2500) //reduce 1 digit to start timer
+	}
 
 	//function ->class object --> created when player inputs name
 	//function ->timer for overall game
