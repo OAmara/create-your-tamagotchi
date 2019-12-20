@@ -17,5 +17,11 @@ body {
 }
 
 .feed {
-	
+background-color: lightcoral;
+}
+
+.wood {
+	display: block;
+	height: 30px;
+	background-color: lightcoral;
 }

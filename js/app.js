@@ -18,7 +18,9 @@ class Tamagotchi {
 		this.age = game.age// what does 0 mean?
 		this.name = name // Based on user input
 	}
-
+	eat() {
+		this.hunger - 4
+	}
 
 	// create methods associated to each button?
 }
@@ -42,10 +44,19 @@ const game = {
 		textAlign: 'center',
 		color: 'darkred'
 		})
+		const $img = $('<img src="https://i.imgur.com/h9JL9Kt.png">')
+		$img.css({
+			display: 'block',
+			BackgroundColor: 'red',
+			height: '300px',
+			margin: 'auto'
+
+		})
+		$img.insertAfter($h1)
 		const tommy = new Tamagotchi($(this.hunger), $(this.sleepiness), $(this.boredom), $(this.age), $input)
 		game.tamagotchi = tommy
 		console.log(tommy);
-		$('#start-game').text("signed your soul for a Devil").hide(4000)
+		$('#start-game').text("signed your soul for a Devil").hide(5000)
 		this.gameTimer()
 
 	},
@@ -59,7 +70,8 @@ const game = {
 			console.log(game.hunger);
 			console.log(game.sleepiness);
 		}, 3500) //reduce 1 digit to start timer
-	}
+	},
+
 
 	//function ->class object --> created when player inputs name
 	//function ->timer for overall game
