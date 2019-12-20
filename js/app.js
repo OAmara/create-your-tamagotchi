@@ -87,8 +87,10 @@ const game = {
 		}
 	},
 	calmPet() {
-		if(this.sleepiness >= 1) {
+		if(this.sleepiness >= 1 && this.hunger >= 1 && this.boredom >= 1) {
 			this.sleepiness -= 1
+			this.hunger -= 1
+			this.boredom -= 1
 			this.printStats()
 		}
 	},
@@ -97,14 +99,16 @@ const game = {
 			this.boredom -= 1
 			this.sleepiness += 1
 			this.hunger += 1
+			this.printStats()
 		}
-	}
+	},
 	gameOver() {
 		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
 			clearInterval(this.intervalId)
 			// Instead of Tag, use change image
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
-			$('<h1>Game Over</h1>').prependTo(document.body)
+			const $h1 = $('<h1 class="game-over">Game Over<h3>hint: calm > feed > entertain</h3></h1>')
+			$h1.prependTo(document.body)
 		}
 	}
 
@@ -131,8 +135,17 @@ $('#start-game').on('submit', (e) => {
 })
 
 $('.feed').on('click', (e) => {
-	console.log($(e.target));
 	game.feedPet()
+})
+
+$('.sleep').on('click', (e) => {
+	console.log($(e.target));
+	game.calmPet()
+})
+
+$('.play').on('click', (e) => {
+	console.log($(e.target));
+	game.entertainPet()
 })
 
 
