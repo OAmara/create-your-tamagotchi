@@ -73,7 +73,7 @@ const game = {
 			console.log(game.hunger);
 
 			this.printStats()
-		}, 1400) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
 		$('.hunger').text(`hunger ${this.hunger}`)
@@ -103,16 +103,19 @@ const game = {
 		if(this.boredom >= 1) {
 			this.boredom -= 1
 			// this.sleepiness += 1
-			this.hunger += 1
+			this.sleepiness += 1
 			this.printStats()
 		}
 	},
 	evolve() {
-		if(this.age > 3 && this.age < 7) {
+		if(this.age > 3 && this.age < 6) {
 			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
 		}
-		if (this.age > 6 && this.age < 13) {
+		if (this.age > 5 && this.age < 10) {
 			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
+		}
+		if (this.age > 9 && this.age < 100) {
+			$('.fire').attr("src", "https://i.imgur.com/neWrJMI.gif")
 		}
 	},
 	gameOver() {
@@ -127,7 +130,7 @@ const game = {
 			$h2.text(`Your pet made it to age: ${this.age}, before being banished to it's biological Father down south.`)
 			$h2.css({
 				textAlign: 'center',
-				fontSize: '1.5em'
+				fontSize: '1.6em'
 			})
 			$h2.prependTo($('.hunger'))
 		}
