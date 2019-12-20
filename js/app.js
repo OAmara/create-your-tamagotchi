@@ -28,7 +28,7 @@ class Tamagotchi {
 // Game; variables/ stored data, functions,
 const game = {
 	// Yes Reuben, I have to store these varaibles inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
-	hours: true,
+	hours: 0, // available value that can be added to conditional for sleeping
 	hunger: 0,
 	sleepiness: 0,
 	boredom: 0,
@@ -70,7 +70,7 @@ const game = {
 			this.sleepiness += 1
 			this.boredom += 2
 			this.age += 1
-			console.log(game.hunger);
+			// console.log(game.hunger);
 
 			this.printStats()
 		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
@@ -90,10 +90,11 @@ const game = {
 		}
 	},
 	lightsOut() {
+			// made if sleepiness > 4 , because pet won't sleep if not tired!
 			if(this.sleepiness >= 4){
-				this.sleepiness -= 3
-				this.boredom -= 2
-				this.hunger -= 2
+				this.sleepiness -= 4
+				this.boredom = 1
+				this.hunger = 1
 				//function for lights
 					//try using setTimeout()
 					this.printStats()
@@ -164,11 +165,12 @@ const game = {
 			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > entertain</h3></h1>')
 			$h1.prependTo(document.body)
 			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png").css('filter', 'blur(2px)')
+			// displays age when gameover
 			const $h2 = $('<h2/>')
 			$h2.text(`Your pet made it to age: ${this.age}, before being banished to it's biological Father down south.`)
 			$h2.css({
 				textAlign: 'center',
-				fontSize: '1.6em',
+				fontSize: '1.7em',
 				filter: 'blur(0px)'
 			})
 			$h2.insertBefore($('.div'))
