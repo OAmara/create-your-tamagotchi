@@ -102,7 +102,7 @@ const game = {
 			this.tommy.age += 1
 
 			this.printStats()
-		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
+		}, 1700) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	// (Future Itteration: This will contain class methods that contain what is currently
 	//occupying printStats)--> will simplify readability between pets.
