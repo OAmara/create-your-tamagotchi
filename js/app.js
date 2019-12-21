@@ -5,9 +5,12 @@ console.log('Tamagotchi Game');
 	//rather than direct object property. Store new tamagochi within array in top game object 
 	//and have function that stores additional tamagochi .push into array.
 		// this will make previous pets accessible or to have more than one pet.
-	//Make a hover over attributes that will show details of each class property and how they behave/ increment.
+		// Place each new pet in own .div and create tab to change .divs between pets.
+	// Make a hover over attributes that will show details of each class property and how they behave/ increment.
 	//display specific string when value reaches specific range.
 		//e.i. this.hunger <= 7 $p.text("starving")
+	// Save space! Place some css made in js into CSS file. Values will be grabbed when 
+	//.show called or .class created with jQuery
 
 // rules reminder:
 	// No -- global scope, COMMITS! FREQUENTLY, 
@@ -29,7 +32,7 @@ class Tamagotchi {
 
 }
 
-/*Friendly reminder of ways to instantiate a class object:
+/*Friendly self-reminder of ways to instantiate a class object:
 In game object, game variable --> tamagoo: new Tamagotchi(asd,asdf,asdfg)
 In method within game object --> const tamagoo = new Tamagotchi(asd, asdf, asdfg)
 note: properties pre-defined in Class can be changed through dot/index notation,
@@ -55,10 +58,11 @@ const game = {
 	gameStart() {
 		// taking submit event, storing in variable, then displaying as h1.
 		const $input = $('#class-name').val()
-		console.log($input);
-		const $hello = $input
-		console.log($hello);
+		// storing name in new variable to save for future use in class object.
+		// $input will be unfound when .hide is passed.
+		const $pet1Name = $input
 
+		// HTML containing Class object name replacing intro text and form input
 		const $h1 = $('<h1 class="pet"></h1>')
 		$h1.text($input).prependTo(document.body)
 		$h1.css({
@@ -66,7 +70,7 @@ const game = {
 			color: 'darkred'
 		})
 
-		// sets default image for new pet
+		// sets default, initial image for new pet w/ css
 		const $img = $('<img class="fire" src="https://i.imgur.com/x7FCCDz.png">')
 		$img.css({
 			display: 'block',
@@ -74,42 +78,45 @@ const game = {
 			height: '300px',
 			margin: 'auto'
 		})
+		// image inserted after pet name display
 		$img.insertAfter($h1)
 
-		// Currently unused instantiated class object
-		// const tommy = new Tamagotchi(0, 0, 0, 0, $hello)
-		this.tommy.name = $hello
+		this.tommy.name = $pet1Name
 		console.log(this.tommy);
 
-		// After user input: Displays new text then slowly hides game
+		// After user input: Displays new text, slowly hides intro text, followed by hiding new text
+		//used for cryptic purposes.
 		$('#start-game').text(". . . signed your soul for a Devil").hide(5100)
 		$('#intro').hide(900)
 		this.gameTimer()
-		console.log(this.tommy);
-		console.log($hello);
 	},
+	// window timer for whole game.
+	// (Future itteration: new class objects will be added in automatically by create another pet func.
+	//same func. that .push new pet into array?)
 	gameTimer() {
 		this.intervalId = setInterval(() => {
-			this.hours += 1
+			this.hours += 1 // not used at this time.
 			this.tommy.hunger += 2
 			this.tommy.sleepiness += 1
 			this.tommy.boredom += 2
 			this.tommy.age += 1
-			// console.log(game.hunger);
 
 			this.printStats()
 		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
 	},
+	// (Future Itteration: This will contain class methods that contain what is currently
+	//occupying printStats)--> will simplify readability between pets.
 	printStats() {
-		// Will display age as well as user's motivation as result screen gives incentive to 
+		// Will display age as user's motivation as result screen gives incentive to 
 		//progress age. Other motivation would include further age images.
 		$('.hunger').text(`hunger: ${this.tommy.hunger}`)
 		$('.sleepiness').text(`tired: ${this.tommy.sleepiness}`)
 		$('.boring').text(`Dullness: ${this.tommy.boredom}`)
-		// this.gameOver() // calling this here 
-		console.log(this.tommy);
+		
+		// console.log(this.tommy);
 		this.evolve()
 	},
+	//(read notes over printStats...applies to all similar property changing methods)
 	feedPet() {
 		if (this.tommy.hunger >= 1) {
 			this.tommy.hunger -= 1
@@ -117,15 +124,19 @@ const game = {
 			this.printStats()
 		}
 	},
+	// Sleep method. Will display "fire demon pet" sleeping in furnace.
+	// replaces calmPet for click event
 	lightsOut() {
 			// made if sleepiness > 4 , because pet won't sleep if not tired!
+			// Perhaps create indicator that `${this.pet.name} is not ready for bed yet`
 			if(this.tommy.sleepiness >= 4){
-				this.tommy.sleepiness -= 4
+				this.tommy.sleepiness -= 3
 				this.tommy.boredom = 1
 				this.tommy.hunger = 1
-				//function for lights
-					//try using setTimeout()
+
 				this.printStats()
+
+				// Pet's bed
 				$(document.body).css({
 					backgroundImage: 'url("https://i.imgur.com/e18s260.png")',
 					backgroundRepeat: 'no-repeat',
@@ -133,8 +144,10 @@ const game = {
 					filter: 'blur(1px)',
 					backgroundColor: 'rgba(190, 81, 42, 1)'
 				})	
-				this.boredom -= 1
+				this.tommy.boredom -= 1
+				this.tommy.sleepiness -= 1
 
+				// return css to original properties and call calmPet after (2.5) seconds
 				setTimeout(() => {
 					$(document.body).css({
 						backgroundImage: 'none',
@@ -145,14 +158,13 @@ const game = {
 					})
 					this.calmPet()
 				},2500)
+
 				// if(this.hours === true){//this.hours % 3 === 0 //&& this.hours % 3 === 0 )
 				// }
 			}
-	
 	},
+	// called after putting pet to sleep
 	calmPet() {
-		// URGENT -- create light effect when pressed. Last specific interval or length
-			//REQUIREMENT
 		if(this.tommy.sleepiness >= 1 && this.tommy.hunger >= 1 && this.tommy.boredom >= 1) {
 			this.tommy.sleepiness -= 1
 			this.tommy.hunger -= 1
@@ -160,6 +172,7 @@ const game = {
 			this.printStats()
 		}
 	},
+	// Play pet button
 	entertainPet() {
 		if(this.tommy.boredom >= 1) {
 			this.tommy.boredom -= 1
@@ -168,6 +181,10 @@ const game = {
 			this.printStats()
 		}
 	},
+	//!!!!!! Huge current game motivator for progression. Should probably display age for incentive
+	//rather than waiting until pet is deceased to visualize. Include text for increased motivation:
+	//"keep on taking care of that demon, how strong can he get?"
+	//	age property utilized to "evolve", change image/ progress.
 	evolve() {
 		if (this.tommy.age > 3 && this.tommy.age < 6) {
 			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
@@ -182,16 +199,19 @@ const game = {
 			this.gameOver()
 		}
 	},
+	// EndGame if pet properties reach 10.
 	gameOver() {
 		if(this.tommy.hunger >= 10 || this.tommy.sleepiness >= 10 || this.tommy.boring >= 10){
+			// stops window timer.
 			clearInterval(this.intervalId)
-			// Instead of Tag, use change image
-			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
+
+			// css will blur entire window, except for gamover, hint, and age progress text:
+
 			$('.div').css('filter', 'blur(2px)')
 			const $h1 = $('<h1 class="game-over">Game Over<h3 class="hint">hint: calm > feed > play</h3></h1>')
 			$h1.prependTo(document.body)
 			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png").css('filter', 'blur(2px)')
-			// displays age when gameover
+			// displays age when gameover. Find way to emphasize age text.
 			const $h2 = $('<h2/>')
 			$h2.text(`Your pet made it to age: ${this.tommy.age}, before being banished to it's biological Father down south.`)
 			$h2.css({
@@ -199,12 +219,13 @@ const game = {
 				fontSize: '1.7em',
 				filter: 'blur(0px)'
 			})
+			// placed before buttons in order to blur remaining tags.
 			$h2.insertBefore($('.div'))
 		}
 	}
 
 
-}//--> gameStart/ call will be in event listener in form 'submit'
+}//--> Game Start/ call will be in event listener in form 'submit'
 
 // Event Listeners
 //	Game start upon form submission
@@ -220,15 +241,18 @@ $('#start-game').on('submit', (e) => {
 })
 
 $('.feed').on('click', (e) => {
+	// feed pet button
 	game.feedPet()
 })
 
 $('.sleep').on('click', (e) => {
+	// place pet in bed/ calm button
 	game.lightsOut()
 	// game.calmPet()
 })
 
 $('.play').on('click', (e) => {
+	// play button
 	game.entertainPet()
 })
 
@@ -237,26 +261,13 @@ $('.play').on('click', (e) => {
 	// HTML Form for user input(listener w/ func. call) to create pet, this is 
 	//how Class is instantiated. Form input will also start the game:
 
-// *	The game should display a character of your choice (and its name) on the screen to represent 
-// your pet. While the pet is alive, it must move somehow. You can use CSS or jQuery animation, 
+// *	While the pet is alive, it must move somehow. You can use CSS or jQuery animation, 
 // or you can swap out GIFs, or you can somehow manually have it moving around the screen by 
-// changing the HTML with some kind of timer. It's up to you. But there must be some kind of 
+// changing the HTML with some kind of timer. There must be some kind of 
 // motion when it's alive, and it should stop when it's dead.
-
-// *	Clearly display the pet's age, and its hunger, boredom, and sleepiness metrics for your pet. 
-// They should be updated on the screen as they change.
-
-// *	Increase your pet's age every [how ever long you want].
-
-// *	Increase your pet's hunger, sleepiness, and boredom metrics at intervals of your choosing.
 
 // *	Important: There should be only one setInterval() running in your entire app. See your 
 // instructors if this a source of confusion for you.
-
-// *	You pet should die if hunger, boredom, or sleepiness hits 10.
-
-// *	Add UI elements to the page to let the user feed your pet, turn off the lights, and play 
-// with your pet.
 
 // *	The feed and play buttons can just change the values, but the light switch must function 
 // differently. The page should change visually to reflect the lights being off for a limited 
