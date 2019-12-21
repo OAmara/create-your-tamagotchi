@@ -1,7 +1,11 @@
 console.log('Tamagotchi Game');
 
 // GOALS:
-	//Make a hover over attributes that will show details of each class property
+	// Make game versatile: All prop. increases call method to increase from instance
+	//rather than direct object property. Store new tamagochi within array in top game object 
+	//and have function that stores additional tamagochi .push into array.
+		// this will make previous pets accessible or to have more than one pet.
+	//Make a hover over attributes that will show details of each class property and how they behave/ increment.
 	//display specific string when value reaches specific range.
 		//e.i. this.hunger <= 7 $p.text("starving")
 
@@ -11,33 +15,49 @@ console.log('Tamagotchi Game');
 // Class
 class Tamagotchi {
 	constructor(hunger, sleepiness, boredom, age, name) {
-		this.hunger = game.hunger
-		this.sleepiness = game.sleepiness
-		this.boredom = game.boredom // what will happen per specific value
-		this.age = game.age
+		this.hunger = hunger
+		this.sleepiness = sleepiness
+		this.boredom = boredom
+		this.age = age // displayed as result of user progress
 		this.name = name // Based on user input
 	}
-	// not currently used
+	// Make functions for every property.
 	eat() {
 		this.hunger - 4
 	}
-
 	// create methods associated to each button?
+
 }
 
-// Game; variables/ stored data, functions,
+/*Friendly reminder of ways to instantiate a class object:
+In game object, game variable --> tamagoo: new Tamagotchi(asd,asdf,asdfg)
+In method within game object --> const tamagoo = new Tamagotchi(asd, asdf, asdfg)
+note: properties pre-defined in Class can be changed through dot/index notation,
+	  also, new variable can be contained to store instance with newly defined variable.
+	  Otherwise, not pre-defined should be defined within new instance.
+*/
+
+// Game; stored data as variables, functions, ...
 const game = {
-	// Yes Reuben, I have to store these varaibles inside of instance instead, especially if I were to have more than one instance. Priority #1 = it works. 
+	// I have to store these varaibles inside of instance instead, especially 
+	//if I were to have more than one instance. Priority #1 = it works. 
 	hours: 0, // available value that can be added to conditional for sleeping
 	hunger: 0,
 	sleepiness: 0,
 	boredom: 0,
+	// determines image progression & incentivies user to progress/ try again.
 	age: 0,
-	tamagotchi: null,
+	// ID for interval(window timer)
 	intervalId: 0,
+	// instance created here to be easily accessible throughout functions.
+	tommy: new Tamagotchi(0, 0, 0, 0, ""),
+	// game starts here after input submit event.
 	gameStart() {
+		// taking submit event, storing in variable, then displaying as h1.
 		const $input = $('#class-name').val()
 		console.log($input);
+		const $hello = $input
+		console.log($hello);
 
 		const $h1 = $('<h1 class="pet"></h1>')
 		$h1.text($input).prependTo(document.body)
@@ -46,6 +66,7 @@ const game = {
 			color: 'darkred'
 		})
 
+		// sets default image for new pet
 		const $img = $('<img class="fire" src="https://i.imgur.com/x7FCCDz.png">')
 		$img.css({
 			display: 'block',
@@ -55,46 +76,53 @@ const game = {
 		})
 		$img.insertAfter($h1)
 
-		const tommy = new Tamagotchi($(this.hunger), $(this.sleepiness), $(this.boredom), $(this.age), $input)
-		game.tamagotchi = tommy
-		console.log(tommy);
+		// Currently unused instantiated class object
+		// const tommy = new Tamagotchi(0, 0, 0, 0, $hello)
+		this.tommy.name = $hello
+		console.log(this.tommy);
 
+		// After user input: Displays new text then slowly hides game
 		$('#start-game').text(". . . signed your soul for a Devil").hide(5100)
 		$('#intro').hide(900)
 		this.gameTimer()
+		console.log(this.tommy);
+		console.log($hello);
 	},
 	gameTimer() {
 		this.intervalId = setInterval(() => {
 			this.hours += 1
-			this.hunger += 2
-			this.sleepiness += 1
-			this.boredom += 2
-			this.age += 1
+			this.tommy.hunger += 2
+			this.tommy.sleepiness += 1
+			this.tommy.boredom += 2
+			this.tommy.age += 1
 			// console.log(game.hunger);
 
 			this.printStats()
 		}, 1500) //bring to 10k digit nearly stop timer, return to 1000
 	},
 	printStats() {
-		$('.hunger').text(`hunger: ${this.hunger}`)
-		$('.sleepiness').text(`tired: ${this.sleepiness}`)
-		$('.boring').text(`Dullness: ${this.boredom}`)
+		// Will display age as well as user's motivation as result screen gives incentive to 
+		//progress age. Other motivation would include further age images.
+		$('.hunger').text(`hunger: ${this.tommy.hunger}`)
+		$('.sleepiness').text(`tired: ${this.tommy.sleepiness}`)
+		$('.boring').text(`Dullness: ${this.tommy.boredom}`)
 		// this.gameOver() // calling this here 
+		console.log(this.tommy);
 		this.evolve()
 	},
 	feedPet() {
-		if (this.hunger >= 1) {
-			this.hunger -= 1
+		if (this.tommy.hunger >= 1) {
+			this.tommy.hunger -= 1
 			// this.sleepiness += 1// too hard
 			this.printStats()
 		}
 	},
 	lightsOut() {
 			// made if sleepiness > 4 , because pet won't sleep if not tired!
-			if(this.sleepiness >= 4){
-				this.sleepiness -= 4
-				this.boredom = 1
-				this.hunger = 1
+			if(this.tommy.sleepiness >= 4){
+				this.tommy.sleepiness -= 4
+				this.tommy.boredom = 1
+				this.tommy.hunger = 1
 				//function for lights
 					//try using setTimeout()
 				this.printStats()
@@ -125,37 +153,37 @@ const game = {
 	calmPet() {
 		// URGENT -- create light effect when pressed. Last specific interval or length
 			//REQUIREMENT
-		if(this.sleepiness >= 1 && this.hunger >= 1 && this.boredom >= 1) {
-			this.sleepiness -= 1
-			this.hunger -= 1
-			this.boredom -= 1
+		if(this.tommy.sleepiness >= 1 && this.tommy.hunger >= 1 && this.tommy.boredom >= 1) {
+			this.tommy.sleepiness -= 1
+			this.tommy.hunger -= 1
+			this.tommy.boredom -= 1
 			this.printStats()
 		}
 	},
 	entertainPet() {
-		if(this.boredom >= 1) {
-			this.boredom -= 1
+		if(this.tommy.boredom >= 1) {
+			this.tommy.boredom -= 1
 			// this.sleepiness += 1
 			// this.sleepiness += 1//too hard
 			this.printStats()
 		}
 	},
 	evolve() {
-		if (this.age > 3 && this.age < 6) {
+		if (this.tommy.age > 3 && this.tommy.age < 6) {
 			$('.fire').attr("src", "https://i.imgur.com/o7ZCkz9.png")
 			this.gameOver()
 		}
-		if (this.age > 5 && this.age < 8) {
+		if (this.tommy.age > 5 && this.tommy.age < 8) {
 			$('.fire').attr("src", "https://i.imgur.com/YyoHrsU.png")
 			this.gameOver()
 		}
-		if (this.age > 7 && this.age < 100) {
+		if (this.tommy.age > 7 && this.tommy.age < 100) {
 			$('.fire').attr("src", "https://i.imgur.com/neWrJMI.gif")
 			this.gameOver()
 		}
 	},
 	gameOver() {
-		if(this.hunger >= 10 || this.sleepiness >= 10 || this.boring >= 10){
+		if(this.tommy.hunger >= 10 || this.tommy.sleepiness >= 10 || this.tommy.boring >= 10){
 			clearInterval(this.intervalId)
 			// Instead of Tag, use change image
 			// this will be done by: i.e. (get class, .attr, 'src', 'image source'...)
@@ -165,7 +193,7 @@ const game = {
 			$('.fire').attr("src", "https://i.imgur.com/7LVtzKF.png").css('filter', 'blur(2px)')
 			// displays age when gameover
 			const $h2 = $('<h2/>')
-			$h2.text(`Your pet made it to age: ${this.age}, before being banished to it's biological Father down south.`)
+			$h2.text(`Your pet made it to age: ${this.tommy.age}, before being banished to it's biological Father down south.`)
 			$h2.css({
 				textAlign: 'center',
 				fontSize: '1.7em',
